@@ -4,14 +4,18 @@ import { useForm } from 'react-hook-form'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { Loading } from '@/components/Loading'
 
 export default function Login() {
   const router = useRouter()
   const { register, handleSubmit } = useForm()
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
 
   async function handleSignIn(data: any) {
     try {
+      setLoading(true)
+
       const response = await signIn('credentials', {
         redirect: false,
         phone: data.phone,
@@ -27,12 +31,15 @@ export default function Login() {
       }
     } catch (error) {
       console.log('[LOGIN_ERROR]: ', error)
+    } finally {
+      setLoading(false)
     }
   }
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center gap-4 p-8">
-      <div className="flex flex-col items-center">
+      {loading && <Loading />}
+      <div className="flex flex-col items-center mb-12">
         <h1 className="font-bold text-3xl text-emerald-800">PlayFieldz</h1>
         <p className="font-normal text-xl">Organize sua pelada</p>
       </div>
