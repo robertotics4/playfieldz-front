@@ -6,8 +6,8 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 export default function Login() {
-  const router = useRouter();
-  const { register, handleSubmit } = useForm();
+  const router = useRouter()
+  const { register, handleSubmit } = useForm()
   const [error, setError] = useState('')
 
   async function handleSignIn(data: any) {
@@ -15,7 +15,7 @@ export default function Login() {
       const response = await signIn('credentials', {
         redirect: false,
         phone: data.phone,
-        password: data.password
+        password: data.password,
       })
 
       console.log('[LOGIN_RESPONSE]: ', response)
@@ -31,32 +31,47 @@ export default function Login() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-4 bg-slate-100">
-      <form onSubmit={handleSubmit(handleSignIn)} className="flex flex-col w-96 gap-2">
-        <label htmlFor="phone">Telefone</label>
+    <main className="flex min-h-screen flex-col items-center justify-center gap-4 p-8">
+      <div className="flex flex-col items-center">
+        <h1 className="font-bold text-3xl text-emerald-800">PlayFieldz</h1>
+        <p className="font-normal text-xl">Organize sua pelada</p>
+      </div>
+
+      <form
+        onSubmit={handleSubmit(handleSignIn)}
+        className="flex flex-col w-full gap-4"
+      >
         <input
           {...register('phone')}
           type="tel"
           name="phone"
-          placeholder='Telefone'
+          placeholder="Número do telefone"
           required
-          className="p-2 rounded-md"
+          className="p-4 rounded-md font-normal text-zinc-900 text-base"
         />
 
-        <label htmlFor="password">Senha</label>
         <input
           {...register('password')}
           type="password"
           name="password"
-          placeholder='Senha'
+          placeholder="Senha"
           required
-          className="p-2 rounded-md"
+          className="p-4 rounded-md font-normal text-zinc-900 text-base"
         />
+        <span className="ml-auto font-normal text-sm text-emerald-900">
+          Esqueci minha senha
+        </span>
+
         {error && (
           <span className="text-red-400 text-sm block mt-2">{error}</span>
         )}
-        <button type="submit" className="bg-black rounded-md p-2 text-white mt-4 font-semibold w-full">Entrar</button>
+        <button
+          type="submit"
+          className="bg-emerald-800 rounded-md p-4 text-white mt-4 font-semibold w-full shadow-2xl shadow-emerald-200"
+        >
+          Entrar
+        </button>
       </form>
     </main>
-  );
+  )
 }

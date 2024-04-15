@@ -5,5 +5,5 @@
 @tailwind utilities;
 
 .gradient-background {
-  background: linear-gradient(to right, #e5fdf1, #e7e6e6);
+  background: linear-gradient(to right, #cfe9dc, #e7e6e6);
 }
