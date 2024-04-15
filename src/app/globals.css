@@ -5,5 +5,20 @@
 @tailwind utilities;
 
 .gradient-background {
-  background: linear-gradient(to right, #cfe9dc, #e7e6e6);
+  background: linear-gradient(80deg,
+      hsl(150deg 37% 86%) 0%,
+      hsl(126deg 27% 88%) 8%,
+      hsl(94deg 25% 87%) 16%,
+      hsl(68deg 23% 87%) 26%,
+      hsl(47deg 25% 88%) 35%,
+      hsl(35deg 28% 89%) 46%,
+      hsl(26deg 26% 90%) 57%,
+      hsl(18deg 19% 90%) 69%,
+      hsl(10deg 11% 90%) 83%,
+      hsl(0deg 2% 90%) 100%);
+}
+
+.custom-box-shadow {
+-webkit-box-shadow: 0px 0px 34px 5px rgba(0, 0, 0, 0.11);
+  box-shadow: 0px 0px 34px 5px rgba(0, 0, 0, 0.11);
 }
