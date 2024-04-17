@@ -4,7 +4,7 @@ import { nextAuthOptions } from '@/app/api/auth/[...nextauth]/route'
 import { Session, getServerSession } from 'next-auth'
 import { Group } from '@/app/types/entities/Group'
 
-export default async function Admin() {
+export default async function Dashboard() {
   const session = await getServerSession(nextAuthOptions)
   const groupService = GroupService.getInstance()
 

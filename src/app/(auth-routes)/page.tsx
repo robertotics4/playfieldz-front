@@ -25,7 +25,7 @@ export default function Login() {
       console.log('[LOGIN_RESPONSE]: ', response)
 
       if (!response?.error) {
-        router.replace('/admin')
+        router.replace('/dashboard')
       } else {
         setError('Telefone ou senha inválidos')
       }

@@ -10,7 +10,7 @@ export default async function PublicLayout({ children }: PublicLayoutProps) {
   const session = await getServerSession(nextAuthOptions)
 
   if (session) {
-    redirect('/admin')
+    redirect('/dashboard')
   }
 
   return <div>{children}</div>
