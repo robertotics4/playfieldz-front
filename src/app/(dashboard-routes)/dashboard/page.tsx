@@ -3,6 +3,7 @@ import { GroupService } from '@/app/services/groups/GroupService'
 import { nextAuthOptions } from '@/app/api/auth/[...nextauth]/route'
 import { Session, getServerSession } from 'next-auth'
 import { Group } from '@/app/types/entities/Group'
+import { ProfileHeader } from '@/app/components/ProfileHeader'
 
 export default async function Dashboard() {
   const session = await getServerSession(nextAuthOptions)
@@ -19,6 +20,8 @@ export default async function Dashboard() {
 
     return (
       <main className="flex flex-col">
+        <ProfileHeader />
+
         <div className="mt-12">
           <h1 className="font-bold text-xl text-slate-800">Grupos</h1>
 

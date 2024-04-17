@@ -1,9 +1,8 @@
+import { EMPTY_PICTURE_DEFAULT } from '@/app/support/constants'
 import { Group } from '@/app/types/entities/Group'
 import { format } from 'date-fns/format'
 import { ptBR } from 'date-fns/locale'
-
-const emptyPicDefault =
-  'https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg'
+import Link from 'next/link'
 
 export type GroupCardProps = {
   groupData: Group
@@ -17,11 +16,14 @@ export async function GroupCard({ groupData }: GroupCardProps) {
   }
 
   return (
-    <div className="flex flex-col bg-white border-2 border-white p-6 rounded-lg mt-6 custom-box-shadow cursor-pointer hover:border-emerald-400 hover:transition-colors">
+    <Link
+      href={`/dashboard/groups/${groupData._id}`}
+      className="flex flex-col bg-white border-2 border-white p-6 rounded-lg mt-6 custom-box-shadow cursor-pointer hover:border-emerald-400 hover:transition-colors"
+    >
       <div className="flex flex-col gap-2">
         <div className="flex items-center gap-4">
           <img
-            src={groupData.imageUrl || emptyPicDefault}
+            src={groupData.imageUrl || EMPTY_PICTURE_DEFAULT}
             alt="Logo do time"
             className="w-8 h-8 rounded-full"
           />
@@ -41,6 +43,6 @@ export async function GroupCard({ groupData }: GroupCardProps) {
           </p>
         </div>
       </div>
-    </div>
+    </Link>
   )
 }
