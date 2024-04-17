@@ -18,4 +18,5 @@ export type Group = {
   playerSubscriptions: PlayerSubscription[]
   description?: string
   imageUrl?: string
+  createdAt: Date
 }

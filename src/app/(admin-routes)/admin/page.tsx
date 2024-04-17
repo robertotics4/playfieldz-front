@@ -23,7 +23,7 @@ export default async function Admin() {
           <h1 className="font-bold text-xl text-slate-800">Grupos</h1>
 
           {groups.map((group: Group) => (
-            <GroupCard key={group._id} />
+            <GroupCard key={group._id} groupData={group} />
           ))}
         </div>
       </main>
