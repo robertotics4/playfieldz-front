@@ -1,4 +1,6 @@
 import { Group } from '@/app/types/entities/Group'
+import { format } from 'date-fns/format'
+import { ptBR } from 'date-fns/locale'
 
 const emptyPicDefault =
   'https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg'
@@ -8,8 +10,14 @@ export type GroupCardProps = {
 }
 
 export async function GroupCard({ groupData }: GroupCardProps) {
+  function formatDatetime(datetime: Date) {
+    return format(datetime, "dd 'de' MMMM 'de' yyyy 'às' HH:mm", {
+      locale: ptBR,
+    })
+  }
+
   return (
-    <div className="flex flex-col bg-white p-6 rounded-lg mt-6 custom-box-shadow cursor-pointer hover:bg-emerald-50">
+    <div className="flex flex-col bg-white border-2 border-white p-6 rounded-lg mt-6 custom-box-shadow cursor-pointer hover:border-emerald-400 hover:transition-colors">
       <div className="flex flex-col gap-2">
         <div className="flex items-center gap-4">
           <img
@@ -28,7 +36,9 @@ export async function GroupCard({ groupData }: GroupCardProps) {
               ? 'Nenhum jogador inscrito'
               : groupData.playerSubscriptions.length}
           </p>
-          <p>Criado em {groupData.createdAt.toString()}</p>
+          <p className="mt-4 text-zinc-500">
+            Criado em {formatDatetime(groupData.createdAt)}
+          </p>
         </div>
       </div>
     </div>
