@@ -7,5 +7,7 @@ declare module 'next-auth' {
       phone: string
       name: string
     }
+    token: string
+    tokenExpirationInSeconds: number
   }
 }

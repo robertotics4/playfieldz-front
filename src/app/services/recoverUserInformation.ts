@@ -1,28 +1,20 @@
-import { api } from './api';
-
-export enum UserPermission {
-  PLAYER = 'Player',
-  ADMIN = 'Administrator',
-  ROOT = 'Root',
-}
-
-type UserRole = {
-  _id: string
-  groupId: string;
-  permission: UserPermission
-}
+import { UserRole } from '../types/entities/User'
+import { api } from './api'
 
 type UserInformation = {
-  _id: string;
-  phone: string;
-  roles: [UserRole];
-  createdAt: Date;
-  updatedAt: Date;
+  _id: string
+  phone: string
+  roles: [UserRole]
+  createdAt: Date
+  updatedAt: Date
 }
 
-
 export async function recoverUserInformation(token: string) {
-  const response = await api.get<UserInformation>('/users/info')
+  const response = await api.get<UserInformation>('/users/info', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
 
   return response.data
 }

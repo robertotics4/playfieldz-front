@@ -1,16 +1,16 @@
-import { api } from './api';
+import { api } from './api'
 
 type SignInRequestData = {
-  phone: string;
-  password: string;
+  phone: string
+  password: string
 }
 
 type SignInResponseData = {
   user: {
-    id: string,
+    id: string
     phone: string
-  },
-  token: string,
+  }
+  token: string
   tokenExpirationInSeconds: number
 }
 
