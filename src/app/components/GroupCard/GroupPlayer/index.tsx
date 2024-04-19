@@ -1,8 +1,6 @@
 import { EMPTY_PICTURE_DEFAULT } from '@/app/support/constants'
-import {
-  PlayerPaymentRecurrence,
-  PlayerSubscription,
-} from '@/app/types/entities/Group'
+import { PlayerSubscription } from '@/app/types/entities/Group'
+import { FaStar } from 'react-icons/fa'
 
 type GroupPlayerProps = {
   subscriptionData: PlayerSubscription
@@ -10,10 +8,10 @@ type GroupPlayerProps = {
 
 export function GroupPlayer({ subscriptionData }: GroupPlayerProps) {
   const { paymentRecurrence } = subscriptionData
-  const { nickname, age, position, attributes } = subscriptionData.player
+  const { nickname, age, position } = subscriptionData.player
 
   return (
-    <div className="flex gap-4 items-center">
+    <div className="flex gap-4 items-center bg-white p-4 rounded-xl custom-box-shadow">
       <img
         src={EMPTY_PICTURE_DEFAULT}
         alt="Imagem do Jogador"
@@ -21,24 +19,22 @@ export function GroupPlayer({ subscriptionData }: GroupPlayerProps) {
       />
 
       <div className="flex flex-col gap-2">
-        <p className="font-bold text-normal text-slate-800">
-          {nickname}, {age} anos, {position.toString()} ({position.toString()})
+        <p className="font-bold text-base text-slate-800">
+          {nickname}, {age} anos
         </p>
 
-        <p className="text-zinc-500">
-          {attributes.map((att, index) => {
-            if (index === 0) return `${att.name}: ${att.value}`
+        <div className="flex items-center gap-2">
+          <FaStar className="text-yellow-500" />
+          <span className="text-sm text-zinc-500">5.0</span>
+          <span className="text-sm text-emerald-800">
+            {paymentRecurrence.toUpperCase()}
+          </span>
+        </div>
 
-            return ` - ${att.name}: ${att.value}`
-          })}
-        </p>
-      </div>
-
-      <div className="ml-auto flex flex-col items-center">
-        <span className="font-bold text-xl text-emerald-800">5.0</span>
-        <span className="font-bold text-xl text-emerald-800">
-          {paymentRecurrence === PlayerPaymentRecurrence.MONTHLY ? 'M' : 'D'}
-        </span>
+        <div className="flex gap-4 text-sm">
+          <span className="text-zinc-500">Posição:</span>
+          <span>{position}</span>
+        </div>
       </div>
     </div>
   )
