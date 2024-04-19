@@ -18,7 +18,7 @@ export async function GroupCard({ groupData }: GroupCardProps) {
   return (
     <Link
       href={`/dashboard/groups/${groupData._id}`}
-      className="flex flex-col bg-white border-2 border-white p-6 rounded-lg mt-6 custom-box-shadow cursor-pointer hover:border-emerald-400 hover:transition-colors"
+      className="flex flex-col bg-white border-2 border-white p-6 rounded-lg mt-6 custom-box-shadow cursor-pointer hover:border-emerald-600 hover:transition-colors"
     >
       <div className="flex flex-col gap-2">
         <div className="flex items-center gap-4">
@@ -27,7 +27,9 @@ export async function GroupCard({ groupData }: GroupCardProps) {
             alt="Logo do time"
             className="w-8 h-8 rounded-full"
           />
-          <h4 className="font-bold text-sm text-slate-800">{groupData.name}</h4>
+          <h4 className="font-bold text-base text-slate-800">
+            {groupData.name}
+          </h4>
         </div>
 
         <div className="flex flex-col mt-4 gap-2 font-normal text-sm text-zinc-900">
