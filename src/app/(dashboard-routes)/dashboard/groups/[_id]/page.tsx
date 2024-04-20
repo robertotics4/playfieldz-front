@@ -47,11 +47,15 @@ export default async function GroupPage({ params }: GroupPageProps) {
 
           <div className="flex flex-col gap-6">
             <h1 className="font-bold mt-12 text-xl text-slate-800">
-              Partidas Recentes
+              Próximas Partidas
             </h1>
 
             {matches.map((match) => (
-              <MatchCard key={match._id} matchData={match} />
+              <MatchCard
+                key={match._id}
+                matchData={match}
+                userId={session.user.id}
+              />
             ))}
           </div>
 

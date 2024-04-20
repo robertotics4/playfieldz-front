@@ -1,12 +1,14 @@
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { Match } from '@/app/types/entities/Match'
+import { PlayerConfirmationButton } from './PlayerConfirmationButton'
 
 interface MatchCardProps {
   matchData: Match
+  userId: string
 }
 
-export function MatchCard({ matchData }: MatchCardProps) {
+export function MatchCard({ matchData, userId }: MatchCardProps) {
   function formatDate(datetime: Date): string {
     return format(datetime, "EEEE, d 'de' MMMM", {
       locale: ptBR,
@@ -17,25 +19,35 @@ export function MatchCard({ matchData }: MatchCardProps) {
     return format(datetime, 'HH:mm')
   }
 
-  return (
-    <div
-      key={matchData._id}
-      className="flex items-center justify-between divide-x-2 p-4 bg-white rounded-xl text-sm text-zinc-500 custom-box-shadow"
-    >
-      <div className="flex flex-col">
-        <p>Limite de jogadores: {matchData.maxPlayerLimit}</p>
-        <p>Jogadores por time: {matchData.playersPerTeam}</p>
-        <p>Jogadores confirmados: {matchData.matchPlayers.length}</p>
-      </div>
+  if (matchData) {
+    const player = matchData.matchPlayers.find(
+      (player) => player.userId === userId,
+    )
 
-      <div className="flex flex-col items-center p-4">
-        <span className="font-normal text-base text-slate-800">
-          {formatDate(matchData.schedulling)}
-        </span>
-        <span className="font-bold text-2xl text-slate-800">
-          {formatTime(matchData.schedulling)}
-        </span>
+    return (
+      <div
+        key={matchData._id}
+        className="flex items-center justify-between divide-x-2 bg-white rounded-xl text-sm text-zinc-500 custom-box-shadow"
+      >
+        <div className="flex p-4 w-full flex-col">
+          <p>Limite da pelada: {matchData.maxPlayerLimit}</p>
+          <p>Limite por time: {matchData.playersPerTeam}</p>
+          <p>Confirmados: {matchData.matchPlayers.length}</p>
+
+          <div className="flex items-center justify-center">
+            <PlayerConfirmationButton isConfirmed={!!player} />
+          </div>
+        </div>
+
+        <div className="flex flex-col items-center p-4">
+          <span className="font-normal text-base text-slate-800">
+            {formatDate(matchData.schedulling)}
+          </span>
+          <span className="font-bold text-2xl text-slate-800">
+            {formatTime(matchData.schedulling)}
+          </span>
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
