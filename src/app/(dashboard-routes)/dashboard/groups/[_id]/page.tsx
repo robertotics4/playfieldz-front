@@ -1,4 +1,4 @@
-import { Session, getServerSession } from 'next-auth'
+import { getServerSession } from 'next-auth'
 import { GroupPlayer } from '@/app/components/GroupCard/GroupPlayer'
 import { GroupCardInfo } from '@/app/components/GroupCard/GroupCardInfo'
 import { Group, PlayerSubscription } from '@/app/types/entities/Group'
@@ -16,29 +16,31 @@ type GroupPageProps = {
 
 export default async function GroupPage({ params }: GroupPageProps) {
   const session = await getServerSession(nextAuthOptions)
-  const groupService = GroupService.getInstance()
-  const matchService = MatchService.getInstance()
 
-  async function loadGroup(session: Session, groupId: string): Promise<Group> {
-    const result = await groupService.findGroups(session.token, {
+  if (!session?.token) {
+    throw new Error('Sessão inválida, tente novamente.')
+  }
+
+  const groupService = GroupService.getInstance(session.token)
+  const matchService = MatchService.getInstance(session.token)
+
+  async function loadGroup(groupId: string): Promise<Group> {
+    const result = await groupService.findGroups({
       _id: groupId,
     })
 
     return result[0]
   }
 
-  async function loadMatches(
-    session: Session,
-    groupId: string,
-  ): Promise<Match[]> {
-    return await matchService.findMatches(session.token, {
+  async function loadMatches(groupId: string): Promise<Match[]> {
+    return await matchService.findMatches({
       group: groupId,
     })
   }
 
   if (session) {
-    const group = await loadGroup(session, params._id)
-    const matches = await loadMatches(session, params._id)
+    const group = await loadGroup(params._id)
+    const matches = await loadMatches(params._id)
 
     if (group) {
       return (
