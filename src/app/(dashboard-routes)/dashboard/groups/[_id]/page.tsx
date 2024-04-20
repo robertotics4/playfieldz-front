@@ -1,12 +1,12 @@
 import { getServerSession } from 'next-auth'
 import { GroupPlayer } from '@/app/components/GroupCard/GroupPlayer'
-import { GroupCardInfo } from '@/app/components/GroupCard/GroupCardInfo'
 import { Group, PlayerSubscription } from '@/app/types/entities/Group'
 import { nextAuthOptions } from '@/app/api/auth/[...nextauth]/route'
 import { GroupService } from '@/app/services/groups/GroupService'
 import { MatchService } from '@/app/services/matches/MatchService'
 import { Match } from '@/app/types/entities/Match'
 import { MatchCard } from '@/app/components/MatchCard'
+import { GroupHeader } from '@/app/components/GroupCard/GroupHeader'
 
 type GroupPageProps = {
   params: {
@@ -45,7 +45,7 @@ export default async function GroupPage({ params }: GroupPageProps) {
     if (group) {
       return (
         <div>
-          <GroupCardInfo />
+          <GroupHeader groupData={group} />
 
           <div className="flex flex-col gap-6">
             <h1 className="font-bold mt-12 text-xl text-slate-800">

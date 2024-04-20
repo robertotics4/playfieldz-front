@@ -15,7 +15,6 @@ export type User = {
   _id: string
   name: string
   phone: string
-  password: string
   roles: UserRole[]
   player?: Player | undefined
 }
