@@ -10,7 +10,7 @@ export default function Login() {
   const router = useRouter()
   const { register, handleSubmit } = useForm()
   const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [isLoading, setLoading] = useState(false)
 
   async function handleSignIn(data: any) {
     try {
@@ -21,8 +21,6 @@ export default function Login() {
         phone: data.phone,
         password: data.password,
       })
-
-      console.log('[LOGIN_RESPONSE]: ', response)
 
       if (!response?.error) {
         router.replace('/dashboard')
@@ -38,7 +36,6 @@ export default function Login() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center gap-4 p-8">
-      {loading && <Loading />}
       <div className="flex flex-col items-center mb-12">
         <h1 className="font-bold text-3xl text-emerald-800">PlayFieldz</h1>
         <p className="font-normal text-xl">Organize sua pelada</p>
@@ -79,6 +76,7 @@ export default function Login() {
           Entrar
         </button>
       </form>
+      {isLoading && <Loading />}
     </main>
   )
 }
