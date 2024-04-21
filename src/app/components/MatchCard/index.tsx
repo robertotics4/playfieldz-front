@@ -2,13 +2,21 @@ import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { Match } from '@/app/types/entities/Match'
 import { PlayerConfirmationButton } from './PlayerConfirmationButton'
+import { getServerSession } from 'next-auth'
+import { nextAuthOptions } from '@/app/api/auth/[...nextauth]/route'
 
 interface MatchCardProps {
   matchData: Match
   userId: string
 }
 
-export function MatchCard({ matchData, userId }: MatchCardProps) {
+export async function MatchCard({ matchData, userId }: MatchCardProps) {
+  const session = await getServerSession(nextAuthOptions)
+
+  if (!session?.token) {
+    throw new Error('Sessão inválida, tente novamente.')
+  }
+
   function formatDate(datetime: Date): string {
     return format(datetime, "EEEE, d 'de' MMMM", {
       locale: ptBR,
@@ -35,7 +43,11 @@ export function MatchCard({ matchData, userId }: MatchCardProps) {
           <p>Confirmados: {matchData.matchPlayers.length}</p>
 
           <div className="flex items-center justify-center">
-            <PlayerConfirmationButton isConfirmed={!!player} />
+            <PlayerConfirmationButton
+              isConfirmed={!!player}
+              authToken={session.token}
+              matchId={matchData._id}
+            />
           </div>
         </div>
 

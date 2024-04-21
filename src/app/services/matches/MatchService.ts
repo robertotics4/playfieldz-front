@@ -29,15 +29,22 @@ export class MatchService {
     }
   }
 
-  public async confirmPlayerPresence(matchId: string): Promise<void> {
+  public async updatePlayerPresence(
+    matchId: string,
+    value: boolean,
+  ): Promise<void> {
     try {
-      await api.post<Match[]>(`/matches/${matchId}`, {
-        headers: {
-          Authorization: `Bearer ${MatchService.token}`,
+      await api.patch(
+        `/matches/${matchId}/presence`,
+        { value },
+        {
+          headers: {
+            Authorization: `Bearer ${MatchService.token}`,
+          },
         },
-      })
+      )
     } catch (error) {
-      console.error('Erro ao buscar partidas:', error)
+      console.error('Erro na confirmação de presença:', error)
       throw error
     }
   }
