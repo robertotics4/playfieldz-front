@@ -1,12 +1,7 @@
 import NextAuth from 'next-auth/next'
-import { NextAuthOptions, User } from 'next-auth'
+import { NextAuthOptions } from 'next-auth'
 import CredentialProvider from 'next-auth/providers/credentials'
-
-interface CustomUser extends User {
-  id: string
-  phone: string
-  name: string
-}
+import { signInRequest } from '@/app/services/auth'
 
 const nextAuthOptions: NextAuthOptions = {
   providers: [
@@ -18,21 +13,17 @@ const nextAuthOptions: NextAuthOptions = {
       },
 
       async authorize(credentials) {
-        const response = await fetch('http://localhost:3333/auth/sign-in', {
-          method: 'POST',
-          body: JSON.stringify({
-            phone: credentials?.phone,
-            password: credentials?.password,
-          }),
-          headers: {
-            'Content-Type': 'application/json',
-          },
+        if (!credentials) {
+          return null
+        }
+
+        const authData = await signInRequest({
+          phone: credentials?.phone,
+          password: credentials?.password,
         })
 
-        const authData = await response.json()
-
-        if (authData && response.ok) {
-          return authData
+        if (authData) {
+          return authData as any
         }
 
         return null
@@ -48,7 +39,7 @@ const nextAuthOptions: NextAuthOptions = {
     },
     session: async ({ session, token }) => {
       session = token.user as any
-      
+
       return session
     },
   },
