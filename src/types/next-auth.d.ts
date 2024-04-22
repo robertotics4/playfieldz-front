@@ -9,5 +9,6 @@ declare module 'next-auth' {
     }
     token: string
     tokenExpirationInSeconds: number
+    expiresIn: Date
   }
 }
