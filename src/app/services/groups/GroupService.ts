@@ -24,7 +24,7 @@ export class GroupService {
       })
       return response.data
     } catch (error) {
-      console.error('Erro ao buscar grupos:', error)
+      console.error('Erro ao buscar grupos:')
       throw error
     }
   }

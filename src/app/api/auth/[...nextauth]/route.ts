@@ -2,6 +2,8 @@ import NextAuth from 'next-auth/next'
 import { NextAuthOptions } from 'next-auth'
 import CredentialProvider from 'next-auth/providers/credentials'
 import { signInRequest } from '@/app/services/auth'
+import { getSession } from 'next-auth/react'
+import { addSeconds, isAfter } from 'date-fns'
 
 const nextAuthOptions: NextAuthOptions = {
   providers: [
@@ -38,9 +40,23 @@ const nextAuthOptions: NextAuthOptions = {
       return token
     },
     session: async ({ session, token }) => {
-      session = token.user as any
+      const authData = token as any
 
-      return session
+      const expirationDate = addSeconds(
+        new Date(authData.expiresIn),
+        authData.tokenExpirationInSeconds,
+      )
+      const isTokenExpired = isAfter(expirationDate, new Date())
+
+      if (!isTokenExpired) {
+        session = token.user as any
+
+        return session
+      }
+
+      const invalidSession = null as any
+
+      return invalidSession
     },
   },
   pages: {
