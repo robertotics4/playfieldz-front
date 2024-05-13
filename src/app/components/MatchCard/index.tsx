@@ -42,7 +42,7 @@ export async function MatchCard({ matchData, userId }: MatchCardProps) {
           <p>Limite por time: {matchData.playersPerTeam}</p>
           <p>Confirmados: {matchData.matchPlayers.length}</p>
 
-          <div className="flex items-center justify-center">
+          <div className="flex items-center">
             <PlayerConfirmationButton
               isConfirmed={!!player}
               authToken={session.token}
@@ -52,10 +52,10 @@ export async function MatchCard({ matchData, userId }: MatchCardProps) {
         </div>
 
         <div className="flex flex-col items-center p-4">
-          <span className="font-normal text-base text-slate-800">
+          <span className="font-normal text-base text-center text-slate-800">
             {formatDate(matchData.schedulling)}
           </span>
-          <span className="font-bold text-2xl text-slate-800">
+          <span className="font-bold text-2xl text-center text-slate-800">
             {formatTime(matchData.schedulling)}
           </span>
         </div>
