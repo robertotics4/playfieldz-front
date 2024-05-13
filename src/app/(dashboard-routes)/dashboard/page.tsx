@@ -36,6 +36,5 @@ export default async function Dashboard() {
         </div>
       </main>
     )
-    return <h1>hello world</h1>
   }
 }
